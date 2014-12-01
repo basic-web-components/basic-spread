@@ -1,0 +1,41 @@
+<!--
+Makes all its children as wide/tall as the widest/tallest children.
+-->
+
+<link rel="import" href="../basic-element/basic-element.html">
+
+<polymer-element name="basic-spread" extends="basic-element" noscript>
+<template>
+  <style>
+  :host {
+    display: inline-block;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 400px;
+  }
+
+  #spreadContainer {
+    display: flex;
+    flex: 1;
+    width: 1200px;
+  }
+
+  #spreadContainer > * {
+    flex: 1;
+    position: relative;
+  }
+  </style>
+  <div id="spreadContainer">
+    <div>
+      <content select="[basic-spread-child='0']"></content>
+    </div>
+    <div>
+      <content select="[basic-spread-child='1']"></content>
+    </div>
+    <div>
+      <content select="[basic-spread-child='2']"></content>
+    </div>
+  </div>
+</template>
+</polymer-element>
