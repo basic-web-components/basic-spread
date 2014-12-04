@@ -5,7 +5,7 @@ Makes all its children as wide/tall as the widest/tallest children.
 <link rel="import" href="../basic-element/basic-element.html">
 <link rel="import" href="../basic-stack/basic-stack.html">
 
-<polymer-element name="basic-spread" extends="basic-element" noscript>
+<polymer-element name="basic-spread" extends="basic-element">
 <template>
   <style>
   :host {
@@ -14,11 +14,20 @@ Makes all its children as wide/tall as the widest/tallest children.
     position: relative;
   }
 
-  ::content > :nth-child(2) { transform: translateX(100%); }
-  ::content > :nth-child(3) { transform: translateX(200%); }
+  ::content > :nth-child(2) { left: 100%; }
+  ::content > :nth-child(3) { left: 200%; }
   </style>
-  <basic-stack>
+  <basic-stack id="spreadStack">
     <content></content>
   </basic-stack>
 </template>
+<script>
+Polymer({
+
+  recalc: function() {
+    this.$.spreadStack.recalc();
+  }
+  
+});
+</script>
 </polymer-element>
