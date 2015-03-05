@@ -1,5 +1,8 @@
 <!--
-Makes all its children as wide/tall as the widest/tallest children.
+Spread children from left to right, ensuring each child is as tall/wide as it
+wants to be, and spacing the children out equally.
+
+@element basic-spread
 -->
 
 <link rel="import" href="../basic-element/basic-element.html">
@@ -10,6 +13,7 @@ Makes all its children as wide/tall as the widest/tallest children.
   <style>
   :host {
     display: block;
+    position: relative; /* So children can size themselves to available space. */
   }
   </style>
   <div id="spreadContainer">
@@ -38,7 +42,6 @@ Polymer({
 
   _stackLayout: function( event ) {
     if (this.$ && this.$.spreadContainer) {
-      console.log(event.detail.width + ' ' + event.detail.height);
       this.$.spreadContainer.style.width = (event.detail.count * event.detail.width) + "px";
     }
   }
