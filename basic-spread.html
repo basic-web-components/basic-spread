@@ -10,15 +10,10 @@ Makes all its children as wide/tall as the widest/tallest children.
   <style>
   :host {
     display: block;
-    overflow-x: auto;
-    position: relative;
   }
-
-  ::content > :nth-child(2) { left: 100%; }
-  ::content > :nth-child(3) { left: 200%; }
   </style>
   <div id="spreadContainer">
-    <basic-stack id="spreadStack" on-basic-stack-resize="{{_stackResize}}">
+    <basic-stack id="spreadStack" on-basic-layout="{{_stackLayout}}">
       <content></content>
     </basic-stack>
   </div>
@@ -26,14 +21,26 @@ Makes all its children as wide/tall as the widest/tallest children.
 <script>
 Polymer({
 
+  contentChanged: function() {
+    this.flattenChildren.forEach(function(child, index) {
+      var left = (index === 0) ?
+        null :
+        (index * 100) + '%';
+      if (child.style.left !== left ){
+        child.style.left = left;      
+      }
+    });
+  },
+
   recalc: function() {
     this.$.spreadStack.recalc();
   },
 
-  _stackResize: function( event ) {
-    var width = event.detail.count * event.detail.width;
-    this.$.spreadContainer.style.width = width + "px";
-    this.style.width = event.detail.width + "px";
+  _stackLayout: function( event ) {
+    if (this.$ && this.$.spreadContainer) {
+      console.log(event.detail.width + ' ' + event.detail.height);
+      this.$.spreadContainer.style.width = (event.detail.count * event.detail.width) + "px";
+    }
   }
   
 });
